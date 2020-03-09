@@ -33,8 +33,19 @@ export default {
   },
   mounted() {},
   created() {
-    // this.guidanceList=this.$store.state.guidance
-    // console.log(this.guidanceList);
+    this.$axios({
+      method: "get",
+      url: "/DHT/suggest_report",
+      params: {
+        id_card: this.$route.query.id_card
+      },
+      headers: { session: this.$store.state.session }
+    }).then(res => {
+      if (res.data.code != 200) alert(res.data.msg);
+      else {
+        this.$store.commit("setGuidance", res.data.data);
+      }
+    });
   },
   watch: {},
   computed: {},
@@ -110,13 +121,13 @@ body {
 .rightbar .el-button {
   width: 200px;
   margin-left: 20px;
-  background-color: rgba(0, 110, 182, 1);
+  background-color: #4eb7e5;
   font-size: 20px;
   font-weight: bold;
   height: 40px;
 }
 .bar-btn .el-button {
-  background-color: rgba(0, 110, 182, 1);
+  background-color: #4eb7e5;
   font-size: 20px;
   font-weight: bold;
   width: 90px;

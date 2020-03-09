@@ -5,14 +5,23 @@ const store = new Vuex.Store({
   state: {
     report:global.sessionStorage.getItem('report'),
     id_card:'',
-    guidance:[],
+    guidance:global.sessionStorage.getItem('guidance'),
     session:global.sessionStorage.getItem('session'),
     doctorId:global.sessionStorage.getItem('id'),
     shownCov:true,
+    name:global.sessionStorage.getItem('name'),
+    isdeliver:global.sessionStorage.getItem('isdeliver')
   },
  
   mutations: {
-    
+    setisdeliver(state,isdeliver){
+      state.isdeliver=isdeliver
+      global.sessionStorage.setItem('isdeliver',isdeliver)
+    },
+    setName(state,name){
+      state.name=name
+      global.sessionStorage.setItem('name',name)
+    },
     setId(state,id){
       state.id_card = id
     }, 

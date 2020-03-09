@@ -16,7 +16,7 @@
               <div class="outBox">
                 <div class="innerBox">营养摄入需求根据年龄、身高、体重估算出维持基本健康所需要的总能量、蛋白质以及水份的需求量。</div>
                 <div class="innerBox">根据年龄、身高、体重估算出维持基本健康所需要的总能量。</div>
-                <div class="innerBox boxVal">{{info.BodyValue.EstimatedEnergyNeed}} kcal/千卡</div>
+                <div class="innerBox boxVal">{{info.BodyValue.EstimatedEnergyNeed=="数据过时，无法计算"?info.BodyValue.EstimatedEnergyNeed:info.BodyValue.EstimatedEnergyNeed+'kcal/千卡'}}</div>
               </div>
             </td>
             <td
@@ -38,7 +38,7 @@
             <td style="border:1px solid #5E92C7;">
               <div class="outBox">
                 <div class="innerBox">根据年龄、身高、体重估算出维持基本健康所需要的蛋白质摄入量。</div>
-                <div class="innerBox boxVal">{{info.BodyValue.EstimatedProteinNeed}}g/克</div>
+                <div class="innerBox boxVal">{{info.BodyValue.EstimatedProteinNeed=="数据过时，无法计算"?info.BodyValue.EstimatedProteinNeed:info.BodyValue.EstimatedProteinNeed+'g/克'}}</div>
               </div>
             </td>
           </tr>
@@ -53,7 +53,7 @@
                 <div class="innerBox">根据年龄、身高、体重估算出维持基本健康所需要的水份摄入量。</div>
                 <div
                   class="innerBox boxVal"
-                >{{info.BodyValue.EstimatedWaterNeed}} ml</div>
+                >{{info.BodyValue.EstimatedWaterNeed=="数据过时，无法计算"?info.BodyValue.EstimatedWaterNeed:info.BodyValue.EstimatedWaterNeed+'ml'}}</div>
               </div>
             </td>
           </tr>

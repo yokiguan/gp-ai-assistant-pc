@@ -77,6 +77,7 @@
           </div>
         </div>
         <div class="part1-footer">
+        <div id="test">
           <div>
             <span class="footer-title">检测项目：</span>
           </div>
@@ -166,6 +167,7 @@
             </div>
           </div>
         </div>
+        </div>
       </div>
     </div>
     <Header :name="info.PersonInfo.name" :date="info.PersonInfo.visit_date"></Header>
@@ -208,6 +210,7 @@
   </div>
 </template>
 <script>
+import dom2image from 'dom-to-image'
 import Header from "./report/header";
 import RecentRisk from "./report/RecentRisk";
 import BodyValue from "./report/BodyValue";
@@ -246,6 +249,8 @@ export default {
       Kidney: false,
       modules: [[], []]
     };
+  },
+  mounted(){
   },
   created() {
     console.log(this.info);

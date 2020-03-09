@@ -1,58 +1,79 @@
 <template>
   <div class="top">
     <div class="top-L">
-      <img src="@/assets/logo.png" />
-      <span class="title">见道科技————智能评估报告</span>
+      <img style="height:35px;width:30px" src="../assets/nav.png" />
+      <div class="top-L-title">家庭医生智能助手——{{name}}</div>
     </div>
-    
+    <div class="top-R">
+      <div>日期：{{time}}|{{doctorname}}</div>
+      <div @click="exit">退出</div>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'top',
-  props: {
-    left: {
-      type: String,
-      default: '',
-    },
-  },
-  components: {
-  },
-  data () {
+  name: "top",
+  props: {},
+  components: {},
+  data() {
     return {
-    }
+      name:this.$route.name=='riskReport'?'慢病风险及生活健康检验报告':'健康管理计划',
+      time: this.formatDate(new Date()),
+      doctorname:this.$store.state.name
+    };
   },
-  created () {
-  },
+  created() {},
   methods: {
-  },
-}
+    formatDate(date) {
+      var myyear = date.getFullYear();
+      var mymonth = date.getMonth() + 1;
+      var myweekday = date.getDate();
+      if (mymonth < 10) {
+        mymonth = "0" + mymonth;
+      }
+      if (myweekday < 10) {
+        myweekday = "0" + myweekday;
+      }
+      return myyear + "-" + mymonth + "-" + myweekday;
+    },
+    exit() {
+      this.$router.push({
+        path: "/signing"
+      });
+    }
+  }
+};
 </script>
-<style lang="css">
-.top{
-  width:100%;
+<style lang="css" scoped>
+.top {
+  width: 100%;
   height: 8vh;
-  font-size:15px;
+  padding: 0 20px;
   box-sizing: border-box;
-  background-color: rgba(255, 255, 255, 1);
-}
-.top-L{
-  width:400px;
-  height:8vh;
+  background: linear-gradient(90deg, rgb(24,231,217), rgb(95,121,234));
+  text-align: center;
+  color: white;
   display: flex;
-  align-items: center;
-  justify-content: center;
   flex-direction: row;
+  justify-content: space-between;
+  align-content: center;
+  vertical-align: middle;
 }
-.top-L img{
-  margin-right:25px;
-  width:45px;
+.top-L {
+  line-height: 63px;
+  font-size: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
-.top-L .title{
-  color:rgba(80, 80, 80, 1);
-  font-size:18px;
-  font-weight:bold;
-  margin-right:25px;
+.top-L-title {
+  margin-left: 10px;
+}
+.top-R {
+  line-height: 63px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 </style>

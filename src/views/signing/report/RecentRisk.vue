@@ -6,7 +6,7 @@
       </div>
       <div class="tableRight">
         <el-col :span='24' class="recentRisk">
-          <b>新冠肺炎Novel Coronavirus Pneumonia（COVID-19）</b>
+          <b>新冠肺炎（COVID-19）</b>
           <br>人群普遍易感。<span style="color:red;font-weight:bold">老年人及患有慢性疾病的人群感染后病情较重，</span>
         儿童及婴幼儿也有发病。当前没有疫苗可以预防新冠肺炎（COVID-19）感染。预防感染的最佳方式是避免与该病毒或病毒携带者的进行接触。</el-col>
       </div>

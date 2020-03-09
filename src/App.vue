@@ -4,15 +4,17 @@
     <div class="app-body" v-else>
     <lTop></lTop>
     <router-view/>
+    <lBottom></lBottom>
   </div>
   </div>
 </template>
 
 <script>
 import lTop from './components/top'
+import lBottom from './components/bottom'
 export default {
   name: 'App',
-  components: {lTop}
+  components: {lTop,lBottom}
 }
 </script>
 

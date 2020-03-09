@@ -2,7 +2,7 @@
   <div class="signing">
     <div class="sign-title">
       <!-- <img src="../../assets/logo.png" class="logo" /> -->
-      <p>慢病风险评估及健康生活管理计划</p>
+      慢病风险评估及健康生活管理计划
     </div>
     <div class="sign-search">
       <el-input type="text" placeholder="请输入身份证号" v-model="id_card" />
@@ -160,6 +160,7 @@ export default {
   transform: translate(-50%, -50%);
   height: 100%;
   width: 100%;
+  background:url('../../assets/bg.png');
   display: flex;
   align-items: center;
   justify-content: center;
@@ -167,8 +168,8 @@ export default {
 }
 .sign-title {
   color: rgba(0, 110, 182, 1);
-  font-size: 40px;
-  font-weight: 500;
+  font-size: 60px;
+  font-weight: 900;
   margin: 0 auto;
   display: flex;
   align-items: center;
@@ -212,7 +213,7 @@ export default {
   width: 350px;
   height: 48px;
   color: rgba(255, 255, 255, 1);
-  background-color: rgba(0, 110, 182, 1);
+  background-color:#4EB7E5;
   border-radius: 4px;
   font-size: 20px;
   line-height: 150%;

@@ -1,8 +1,8 @@
 <template>
   <div class="login">
-    <img src="../../assets/bj.png" class="login-bj" />
-    <el-col :span="10" class="tech-title">家庭医生智能助手</el-col>
-    <el-col :span="10" class="content">
+    <img src="../../assets/bg.png" class="login-bj" />
+    <el-col :span="10" class="tech-title">家庭医生·慢病生活管理智能助手</el-col>
+    <el-col :span="12" class="content">
       <div class="login-title">登录</div>
       <div class="login-input">
         <el-input v-model="number" placeholder="请输入用户名" />
@@ -10,8 +10,11 @@
       <div class="login-input">
         <el-input v-model="password" placeholder="请输入密码" type="password" />
       </div>
+      <div class="login-botton" style="font-size:18px">
+        <a href>医师注册</a>
+        <a href>忘记密码</a>
+      </div>
       <div class="login-botton">
-        <el-checkbox v-model="radio" label="1" size="large">记住账号</el-checkbox>
         <el-button type="primary" @click="login">登录</el-button>
       </div>
     </el-col>
@@ -47,6 +50,7 @@ export default {
       }).then(res => {
         console.log(res);
         if (res.data.code == 200) {
+          this.$store.commit('setName',res.data.name)
           this.$store.commit("setdocId", this.number);
           this.$store.commit("setSession", res.headers.session);
           console.log("session",window.sessionStorage.getItem('session'))
@@ -81,7 +85,7 @@ body{
 }
 .tech-title{
   position: fixed;
-  top: 24%;
+  top: 17%;
   left: 40%;
   transform: translate(-50%, -50%);
   text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.3);
@@ -102,14 +106,14 @@ body{
 }
 .content {
   position: fixed;
-  top: 50%;
+  top:48%;
   left: 50%;
   transform: translate(-50%, -50%);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  padding: 30px;
+  padding: 0px;
   background: white;
   box-shadow: 0px 8px 50px 15px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
@@ -117,10 +121,10 @@ body{
 }
 .login-title {
   width: 85%;
-  color: rgba(0, 110, 182, 1);
+  color: #4EB7E5;
   font-size: 40px;
   font-weight:500;
-  margin-bottom: 10px;
+  margin: 30px 0 0 0;
 }
 .login-input {
   width: 85%;
@@ -129,14 +133,17 @@ body{
   align-items: center;
   justify-content: space-between;
   flex-direction: row;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
-.login-input .el-input {
-  height: 5%;
+.login-input .el-input .el-input__inner{
+  height: 55px;
+  border-radius: 4px;
   font-size: 23px;
+  color:rgba(0, 110, 182, 1)
 }
 .login-botton {
-  margin-top: 20px;
+  margin-top: 15px;
+  margin-bottom: 15px;
   font-size: 15px;
   width: 85%;
   display: flex;
@@ -146,7 +153,8 @@ body{
 }
 .login-botton .el-button {
   text-align: enter;
-  width: 100px;
+  margin:0 auto;
+  width: 80%;
   height: 40px;
 }
 .login {
@@ -154,5 +162,14 @@ body{
   width: 100%;
   background-color: white;
   /* display: flex; */
+}
+.el-input__inner::-webkit-input-placeholder {
+  color: rgba(0, 110, 182, 1);
+}
+.el-input__inner::-moz-input-placeholder {
+  color: rgba(0, 110, 182, 1);
+}
+.el-input__inner::-ms-input-placeholder {
+  color: rgba(0, 110, 182, 1);
 }
 </style>

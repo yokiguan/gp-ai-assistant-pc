@@ -59,7 +59,7 @@
             <el-checkbox v-model="isRisk">
               <span
                 style="color:black;font-size:18px;font-weight:bold;margin-bottom:30px;margin-top:10px;"
-              >新型冠状病毒2019-nCov健康宣教</span>
+              >新型冠状病毒COVID-19健康宣教</span>
             </el-checkbox>
             <div class="adds">
               其他建议
@@ -131,6 +131,7 @@ export default {
     return {
       url: "",
       code: "",
+      isdeliver: this.$store.state.isdeliver,
       mobileTips: false,
       minselect: 0,
       activeName: [0],
@@ -150,11 +151,69 @@ export default {
     };
   },
   created() {
+    this.isReport(JSON.parse(this.$store.state.report))
     this.info = JSON.parse(this.$store.state.report);
+    
   },
   watch: {},
   computed: {},
   methods: {
+    isReport(report){
+      if(!report.BodyValue&&!report.Urine&&!report.BloodPressure&&!report.BloodLipid&&!report.Liver&&!report.Hepatitis&&!report.Blood&&!report.Electrolyte&&!report.BloodSugar&&!report.Kidney){
+        this.show=true
+        this.$axios({
+          method: "get",
+          url: "/DHT/generate_smart_goal",
+          params: {
+            id_card: this.$route.query.id_card
+          },
+          headers: { session: this.$store.state.session }
+        }).then(res => {
+          if (res.data.data.need_show_up) {
+            this.show=false
+            this.isTwice = true;
+            // this.feedbacks = res.data.data.smart_goal_data;
+            this.feedbacks = JSON.parse(
+              JSON.stringify(res.data.data.smart_goal_data).replace(
+                /smart_goal/g,
+                "smart_goal_list"
+              )
+            );
+          } else
+            this.$axios({
+              method: "get",
+              url: "/DHT/mission_page",
+              params: {
+                id_card: this.$route.query.id_card
+              },
+              headers: { session: this.$store.state.session }
+            }).then(res => {
+              this.mission_detail_list = res.data.data.mission_detail_list;
+              this.mission_name_list = res.data.data.mission_name_list;
+              this.mission_name = this.mission_name_list[0];
+              this.cycle = res.data.data.period;
+              let a = new Array();
+              this.missions = new Array(res.data.data.mission_name_list.length)
+                .fill(null)
+                .map((item, index) => {
+                  var a = new Object();
+                  a.mission = this.mission_name_list[index];
+                  a.smart_goal_list = [];
+                  return a;
+                });
+              this.checkList = new Array(res.data.data.mission_name_list.length)
+                .fill(null)
+                .map(item => {
+                  return new Array();
+                });
+              this.doctor_missions = res.data.data.doctor_missions;
+              this.minselect = res.data.data.smart_goal_need_selected_num;
+              this.show = true;
+              this.isRisk = res.data.nCov;
+            });
+        });
+      }
+    },
     click(goal) {
       // console.log(goal)
       // console.log(this.feedbacks['smart_goal_list'])
@@ -162,6 +221,8 @@ export default {
     print() {
       let bdHtml = window.document.body.innerHTML;
       let printHtml = window.document.getElementById("printContent").innerHTML;
+      this.isdeliver = true;
+      this.$store.commit('setisdeliver',true)
       window.document.body.innerHTML = printHtml;
       window.print();
       window.location.reload();
@@ -207,56 +268,59 @@ export default {
       }
     },
     planShow() {
-      this.$axios({
-        method: "get",
-        url: "/DHT/generate_smart_goal",
-        params: {
-          id_card: this.$route.query.id_card
-        },
-        headers: { session: this.$store.state.session }
-      }).then(res => {
-        if (res.data.data.need_show_up) {
-          this.isTwice = true;
-          // this.feedbacks = res.data.data.smart_goal_data;
-          this.feedbacks = JSON.parse(
-            JSON.stringify(res.data.data.smart_goal_data).replace(
-              /smart_goal/g,
-              "smart_goal_list"
-            )
-          );
-        } else
-          this.$axios({
-            method: "get",
-            url: "/DHT/mission_page",
-            params: {
-              id_card: this.$route.query.id_card
-            },
-            headers: { session: this.$store.state.session }
-          }).then(res => {
-            this.mission_detail_list = res.data.data.mission_detail_list;
-            this.mission_name_list = res.data.data.mission_name_list;
-            this.mission_name = this.mission_name_list[0];
-            this.cycle = res.data.data.period;
-            let a = new Array();
-            this.missions = new Array(res.data.data.mission_name_list.length)
-              .fill(null)
-              .map((item, index) => {
-                var a = new Object();
-                a.mission = this.mission_name_list[index];
-                a.smart_goal_list = [];
-                return a;
-              });
-            this.checkList = new Array(res.data.data.mission_name_list.length)
-              .fill(null)
-              .map(item => {
-                return new Array();
-              });
-            this.doctor_missions = res.data.data.doctor_missions;
-            this.minselect = res.data.data.smart_goal_need_selected_num;
-            this.show = true;
-            this.isRisk = res.data.nCov;
-          });
-      });
+      if (this.isdeliver) {
+        this.$axios({
+          method: "get",
+          url: "/DHT/generate_smart_goal",
+          params: {
+            id_card: this.$route.query.id_card
+          },
+          headers: { session: this.$store.state.session }
+        }).then(res => {
+          if (res.data.data.need_show_up) {
+            this.isTwice = true;
+            // this.feedbacks = res.data.data.smart_goal_data;
+            this.feedbacks = JSON.parse(
+              JSON.stringify(res.data.data.smart_goal_data).replace(
+                /smart_goal/g,
+                "smart_goal_list"
+              )
+            );
+          } else
+            this.$axios({
+              method: "get",
+              url: "/DHT/mission_page",
+              params: {
+                id_card: this.$route.query.id_card
+              },
+              headers: { session: this.$store.state.session }
+            }).then(res => {
+              this.mission_detail_list = res.data.data.mission_detail_list;
+              this.mission_name_list = res.data.data.mission_name_list;
+              this.mission_name = this.mission_name_list[0];
+              this.cycle = res.data.data.period;
+              let a = new Array();
+              this.missions = new Array(res.data.data.mission_name_list.length)
+                .fill(null)
+                .map((item, index) => {
+                  var a = new Object();
+                  a.mission = this.mission_name_list[index];
+                  a.smart_goal_list = [];
+                  return a;
+                });
+              this.checkList = new Array(res.data.data.mission_name_list.length)
+                .fill(null)
+                .map(item => {
+                  return new Array();
+                });
+              this.doctor_missions = res.data.data.doctor_missions;
+              this.minselect = res.data.data.smart_goal_need_selected_num;
+              this.show = true;
+              this.isRisk = res.data.nCov;
+            });
+        });
+      } else
+        return alert("您未打印或发送报告至患者，请打印或发送后进入健康管理页面");
     },
     planShowTwice() {
       let feeds = JSON.parse(JSON.stringify(this.feedbacks));
@@ -429,6 +493,8 @@ export default {
           this.mobileTips = true;
           this.url = res.data.data.url;
           this.code = res.data.data.code;
+          this.isdeliver = true;
+          this.$store.commit('setisdeliver',true)
         }
       });
     }
@@ -447,7 +513,7 @@ export default {
   justify-content: start;
   flex-direction: row;
   margin-top: 1%;
-  height: 100%;
+  height: 83vh;
   width: 100%;
   font-size: 20px;
   background-color: rgba(229, 229, 229, 1);
@@ -484,13 +550,13 @@ export default {
 .rightbar .el-button {
   width: 200px;
   margin-left: 20px;
-  background-color: rgba(0, 110, 182, 1);
+  background-color: #4eb7e5;
   font-size: 20px;
   font-weight: bold;
   height: 40px;
 }
 .bar-btn .el-button {
-  background-color: rgba(0, 110, 182, 1);
+  background-color: #4eb7e5;
   font-size: 20px;
   font-weight: bold;
   width: 90px;

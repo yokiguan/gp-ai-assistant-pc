@@ -4,7 +4,7 @@
     <div class="guidepage">
       <header>
         <div class="foot_icon">
-          <img src="@/assets/image/logo.png" width="35" alt />
+          <img src="@/assets/logo.png" width="35" alt />
           <a>见道科技</a>
         </div>
       </header>
@@ -42,76 +42,6 @@
           <!-- <p>{{info.id_card}}</p> -->
         </el-col>
       </el-row>
-      <!-- <div class="fixed-top">
-        <h2>健康管理指导</h2>
-        <div class="part1 separate">
-          <div class="part-title">
-            <div class="part">PART 01</div>
-            <a class="cn">确诊疾病</a>
-            <a class="en">Confirmed</a>
-          </div>
-          <div class="container">
-            <div class="contain_content">
-              <div class="test">
-              *  {{item.part_1.is_diabetes}}
-              </div>
-              <div class="test">
-              *  fbs:{{item.part_1.fbs}}
-              </div>
-              <div class="test">
-              *  {{item.part_1.is_hypertension}}
-            </div>
-            </div>
-          </div>
-        </div>
-        <div class="part2 separate">
-          <div class="part-title">
-            <div class="part">PART 02</div>
-            <a class="cn">健康危害</a>
-            <a class="en">Health Risks</a>
-          </div>
-          <div class="container">
-          </div>
-        </div>
-      </div>
-      <div class="part3 separate">
-        <div class="part-title">
-          <div class="part">PART 03</div>
-          <a class="cn">生活方式危险因素</a>
-          <a class="en">Lifestyle Risks</a>
-        </div>
-        <div class="container">
-          <div class="mission_name">
-            * 您下周的主要健康任务为：{{item.part_3.mission_name}}
-          </div>
-          <div class="mission_reason"> 
-            原因：{{item.part_3.introduction}}
-          </div>
-        </div>
-        
-      </div>
-        <div class="part4 separate">
-          <div class="part-title">
-            <div class="part">PART 04</div>
-            <a class="cn">健康小知识</a>
-            <a class="en">Health Knowledge</a>
-          </div>
-          <div v-html="item.part_4.value" class="container">
-            *{{item.part_4.value}}
-          </div>
-        </div>
-        <div class="part5 separate">
-          <div class="part-title">
-            <div class="part">PART 05</div>
-            <a class="cn">每日行为建议</a>
-            <a class="en">Lifestyle Counselling</a>
-          </div>
-          <div class="container">
-            <div v-for="(advice,index) in item.part_5" :key="index">
-              {{index+1}}. {{advice}}
-            </div>
-          </div>
-      </div>-->
       <h2>健康管理指导</h2>
       <div class="part1 separate">
         <div class="part-title">
@@ -121,13 +51,13 @@
         </div>
         <div class="container">
           <el-row class="part-outbox">
-            * 此期间（2020/02/02-2020/03/02）您需要完成以下任务：
-            <div v-for="(item,index) in data.data.part_1" :key="index" class="part-content">
+            * 此期间（{{data.start_time}}-{{data.end_time}}）您需要完成以下任务：
+            <div v-for="(item,index) in data.data.part_1" :key="item.mission_name" class="part-content">
               <el-col :span="8" class="first-standard">{{item.mission_name}}</el-col>
               <el-col
                 :span="24"
                 v-for="(goal,pos) in item.smart_goal_list"
-                :key="pos"
+                :key="goal"
                 class="second-standard"
               >{{pos+1}}.{{goal}}</el-col>
             </div>
@@ -146,7 +76,7 @@
               <el-col :span="8" class="first-standard">确诊情况</el-col>
               <el-col
                 v-for="(item,index) in data.data.part_2.disease_list"
-                :key="index"
+                :key="item.disease"
                 :span="24"
                 class="second-standard"
               >
@@ -157,7 +87,7 @@
               <el-col
                 :span="24"
                 v-for="(item,index) in data.data.part_2.problem_list"
-                :key="index"
+                :key="item.problem"
                 class="second-standard"
               >
                 <el-col :span="10" class="diagnosis">*{{item.problem}}</el-col>
@@ -175,7 +105,7 @@
         </div>
         <div class="container">
           <el-row class="part-outbox">
-            <div v-for="(item,index) in data.data.part_3" :key="index" class="part-content">
+            <div v-for="(item,index) in data.data.part_3" :key="item.name" class="part-content">
               <el-col :span="8" class="first-standard">{{item.name}}</el-col>
               <el-col :span="24" v-html="item.content" class="second-standard">{{item.content}}</el-col>
             </div>
@@ -190,7 +120,7 @@
         </div>
         <div class="container">
           <el-row class="part-outbox">
-            <div v-for="(item,index) in data.data.part_4" :key="index" class="part-content">
+            <div v-for="(item,index) in data.data.part_4" :key="item.mission_name" class="part-content">
               <el-col :span="8" class="first-standard">{{item.mission_name}}</el-col>
               <el-col :span="24" class="second-standard">{{item.introduction}}</el-col>
             </div>
@@ -208,25 +138,10 @@
 </template>
 <script>
 export default {
-  created() {
-    this.$axios({
-      method: "get",
-      url: "/DHT/suggest_report",
-      params: {
-        id_card: this.$route.query.id_card
-      },
-      headers: { session: this.$store.state.session }
-    }).then(res => {
-      if (res.data.code != 200) alert(res.data.msg);
-      else {
-        this.$store.commit("setGuidance", res.data.data);
-        this.data = JSON.parse(this.$store.state.guidance);
-      }
-    });
-  },
+  created() {  },
   data() {
     return {
-      data: ""
+      data: JSON.parse(this.$store.state.guidance)
     };
   },
   methods: {}
