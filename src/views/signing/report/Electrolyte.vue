@@ -10,9 +10,9 @@
             <td style="width:40mm;"></td>
             <td style="width:36mm;">参考范围</td>
             <td style="width:7.3mm;"></td>
-            <td style="width:32.7mm;background-color:#CCC5E2;">{{info.Electrolyte.date_list[0]}}</td>
-            <td style="width:32mm;">{{info.Electrolyte.date_list[1]}}</td>
-            <td style="width:31mm;">{{info.Electrolyte.date_list[2]}}</td>
+            <td style="width:32.7mm;background-color:#CCC5E2;">{{info.Electrolyte.date_list[0]==null?'':info.Electrolyte.date_list[0]}}</td>
+            <td style="width:32mm;">{{info.Electrolyte.date_list[1]==null?'':info.Electrolyte.date_list[1]}}</td>
+            <td style="width:31mm;">{{info.Electrolyte.date_list[2]==null?'':info.Electrolyte.date_list[2]}}</td>
           </tr>
           <tr v-if="info.Electrolyte.K!==null">
             <td>
@@ -20,7 +20,7 @@
             </td>
             <td>3.5-5.3mmol/L</td>
             <td>
-              <template v-if="info.Electrolyte.K[0].length!=0">
+              <template v-if="info.Electrolyte.K[0].length!==null">
                 <span v-if="info.Electrolyte.K[0]<3.5">
                   <img style="width:5mm;height:5mm;" src="../../../assets/new/低2.png" alt />
                 </span>
@@ -33,7 +33,7 @@
               </template>
             </td>
             <td v-for="(item,index) in info.Electrolyte.K" :key="index">
-              <span>{{item}}</span>
+              <span>{{item==null?'':item}}</span>
             </td>
           </tr>
           <tr v-if="info.Electrolyte.Na!==null" style="background-color:#E6E2F3;">
@@ -42,7 +42,7 @@
             </td>
             <td>137-147mmol/L</td>
             <td>
-              <template v-if="info.Electrolyte.Na[0].length!=0">
+              <template v-if="info.Electrolyte.Na[0]!==null">
                 <span v-if="info.Electrolyte.Na[0]<137">
                   <img style="width:5mm;height:5mm;" src="../../../assets/new/低2.png" alt />
                 </span>
@@ -54,9 +54,9 @@
                 </span>
               </template>
             </td>
-            <td style="background-color:#ccc5e2;">{{info.Electrolyte.Na[0]}}</td>
-            <td>{{info.Electrolyte.Na[1]}}</td>
-            <td>{{info.Electrolyte.Na[2]}}</td>
+            <td style="background-color:#ccc5e2;">{{info.Electrolyte.Na[0]==null?'':info.Electrolyte.Na[0]}}</td>
+            <td>{{info.Electrolyte.Na[1]==null?'':info.Electrolyte.Na[1]}}</td>
+            <td>{{info.Electrolyte.Na[2]==null?'':info.Electrolyte.Na[2]}}</td>
           </tr>
           <tr>
             <td>

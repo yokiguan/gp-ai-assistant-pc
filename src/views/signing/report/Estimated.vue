@@ -2,6 +2,7 @@
   <div class="module-container">
     <div class="part1">
       <div class="aside">
+        
         <sideDemo headline="每日营养需要量" height="46.7mm" color="#5E92C7"></sideDemo>
       </div>
       <div class="tableRight">
@@ -81,13 +82,13 @@
                       <div class="innerBox noWboxVal">6个月体重变化百分率</div>
                       <div
                         class="innerBox boxVal"
-                      >{{info.BodyValue.WeightChange.six_mouth_change.value}}</div>
+                      >{{info.BodyValue.WeightChange.six_mouth_change.value==null?"":info.BodyValue.WeightChange.six_mouth_change.value}}</div>
                     </td>
                     <td>
                       <div class="innerBox noWboxVal">3个月体重变化百分率</div>
                       <div
                         class="innerBox boxVal"
-                      >{{info.BodyValue.WeightChange.three_mouth_change.value}}</div>
+                      >{{info.BodyValue.WeightChange.three_mouth_change.value==null?'':info.BodyValue.WeightChange.three_mouth_change.value}}</div>
                     </td>
                   </tr>
                 </table>

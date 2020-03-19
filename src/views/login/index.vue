@@ -1,21 +1,17 @@
 <template>
   <div class="login">
     <img src="../../assets/bg.png" class="login-bj" />
-    <el-col :span="10" class="tech-title">家庭医生·慢病生活管理智能助手</el-col>
+    <el-col :span="12" class="tech-title">家庭医生 · 慢病生活管理智能助手</el-col>
     <el-col :span="12" class="content">
-      <div class="login-title">登录</div>
+      <div class="login-title">欢迎使用家庭医生 · 慢病生活管理智能助手，请登录</div>
       <div class="login-input">
         <el-input v-model="number" placeholder="请输入用户名" />
       </div>
       <div class="login-input">
         <el-input v-model="password" placeholder="请输入密码" type="password" />
       </div>
-      <div class="login-botton" style="font-size:18px">
-        <a href>医师注册</a>
-        <a href>忘记密码</a>
-      </div>
       <div class="login-botton">
-        <el-button type="primary" @click="login">登录</el-button>
+        <el-button @click="login">登 录</el-button>
       </div>
     </el-col>
     <el-row class="tech-right">技术支持：见道（杭州）科技有限公司</el-row>
@@ -85,14 +81,14 @@ body{
 }
 .tech-title{
   position: fixed;
-  top: 17%;
-  left: 40%;
+  top: 29%;
+  left: 50%;
   transform: translate(-50%, -50%);
   text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.3);
-  text-align: center;
+  /* text-align: center; */
   color:white;
   font-weight: bolder;
-  font-size:40px;
+  font-size:45px;
 }
 .tech-right{
   position: fixed;
@@ -100,13 +96,13 @@ body{
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
-  color:#11C2EE;
+  color:rgba(78, 183, 229, 1);
   font-weight: bolder;
   font-size:16px;
 }
 .content {
   position: fixed;
-  top:48%;
+  top:55%;
   left: 50%;
   transform: translate(-50%, -50%);
   display: flex;
@@ -120,11 +116,11 @@ body{
   padding-bottom: 40px;
 }
 .login-title {
-  width: 85%;
-  color: #4EB7E5;
-  font-size: 40px;
-  font-weight:500;
-  margin: 30px 0 0 0;
+ width: 85%;
+  color: #666666;
+  font-size: 20px;
+  font-weight: 500;
+  margin: 30px 0 10px 0;
 }
 .login-input {
   width: 85%;
@@ -136,16 +132,15 @@ body{
   margin-bottom: 5px;
 }
 .login-input .el-input .el-input__inner{
-  height: 55px;
+  height: 45px;
   border-radius: 4px;
-  font-size: 23px;
+  font-size: 16px;
   color:rgba(0, 110, 182, 1)
 }
 .login-botton {
-  margin-top: 15px;
-  margin-bottom: 15px;
+  margin-top: 25px;
   font-size: 15px;
-  width: 85%;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -154,8 +149,11 @@ body{
 .login-botton .el-button {
   text-align: enter;
   margin:0 auto;
-  width: 80%;
-  height: 40px;
+  width: 85%;
+  height: 45px;
+  color:white !important;
+  font-weight: bolder;
+  background-color: rgba(78, 183, 229, 1);
 }
 .login {
   height: 100%;
@@ -164,12 +162,12 @@ body{
   /* display: flex; */
 }
 .el-input__inner::-webkit-input-placeholder {
-  color: rgba(0, 110, 182, 1);
+  color: rgba(78, 183, 229, 1);
 }
 .el-input__inner::-moz-input-placeholder {
-  color: rgba(0, 110, 182, 1);
+  color: rgba(78, 183, 229, 1);
 }
 .el-input__inner::-ms-input-placeholder {
-  color: rgba(0, 110, 182, 1);
+  color: rgba(78, 183, 229, 1);
 }
 </style>

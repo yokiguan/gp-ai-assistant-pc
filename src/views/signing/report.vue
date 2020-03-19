@@ -132,7 +132,7 @@
                       <span v-if="info.BodyValue!==null&&info.BodyValue.height_list!==null">
                         <span
                           v-if="info.BodyValue.height_list[0].length!=0"
-                        >{{info.BodyValue.height_list[0]}}cm</span>
+                        >{{getExistData(info.BodyValue.height_list)}}cm</span>
                         <span v-else>无数据</span>
                       </span>
                       <span v-else>无数据</span>
@@ -144,7 +144,7 @@
                       <span v-if="info.BodyValue!==null&&info.BodyValue.weight_list!==null">
                         <span
                           v-if="info.BodyValue.weight_list[0].length!=0"
-                        >{{info.BodyValue.weight_list[0]}}kg</span>
+                        >{{getExistData(info.BodyValue.weight_list)}}kg</span>
                         <span v-else>无数据</span>
                       </span>
                       <span v-else>无数据</span>
@@ -253,14 +253,10 @@ export default {
   mounted(){
   },
   created() {
-    console.log(this.info);
-    // console.log("刷新", this.info.BodyValue);
     this.getClass();
     this.getTest();
-    // this.modules = new Array(2).fill(null).map(item => {
-    //   return new Array();
-    // });
-    this.showModule();
+    // this.showModule();
+    console.log(this);
   },
   components: {
     Header,
@@ -279,6 +275,13 @@ export default {
   },
   props: ["info"],
   methods: {
+    getExistData(list){
+      for(let item of list){
+        if(item.length!=0){
+          return item
+        }
+      }
+    },
     getClass() {
       if (this.info.PersonInfo.is_hypertension == "是")
         this.is_hypertension = true;
@@ -293,16 +296,31 @@ export default {
       this.gender.push(this.info.PersonInfo.gender);
     },
     getTest() {
-      if (this.info.BodyValue) this.checkList.push("BodyValue");
-      if (this.info.Urine) this.checkList.push("Urine");
-      if (this.info.BloodPressure) this.checkList.push("BloodPressure");
-      if (this.info.BloodLipid) this.checkList.push("BloodLipid");
-      if (this.info.Liver) this.checkList.push("Liver");
-      if (this.info.Hepatitis) this.checkList.push("Hepatitis");
-      if (this.info.Blood) this.checkList.push("Blood");
-      if (this.info.Electrolyte) this.checkList.push("Electrolyte");
-      if (this.info.BloodSugar) this.checkList.push("BloodSugar");
-      if (this.info.kidney) this.checkList.push("kidney");
+      if (this.info.BodyValue) {
+        this.checkList.push("BodyValue");
+        this.BodyValue=true
+      }
+      if (this.info.Urine){
+        this.checkList.push("Urine");
+        this.Urine=true
+        } 
+      if (this.info.BloodPressure) {
+        this.checkList.push("BloodPressure");
+        this.BloodPressure=true
+      }
+      if (this.info.BloodLipid) {
+        this.checkList.push("BloodLipid");
+        this.BloodLipid=true;}
+      if (this.info.Liver) {
+        this.checkList.push("Liver");
+        this.Liver=true
+        }
+      if (this.info.Hepatitis) {this.checkList.push("Hepatitis");
+      this.Hepatitis=true}
+      if (this.info.Blood) {this.checkList.push("Blood");this.Blood=true}
+      if (this.info.Electrolyte) {this.checkList.push("Electrolyte");this.Electrolyte=true}
+      if (this.info.BloodSugar) {this.checkList.push("BloodSugar");this.BloodSugar=true}
+      if (this.info.Kidney) {this.checkList.push("kidney");this.Kidney=true}
     },
     toImage() {
       dom2image
@@ -397,6 +415,7 @@ export default {
         this.Kidney = true;
         // this.modules[1].push("Kidney");
       }
+      console.log(this)
     },
     domInsert() {
       let strlist = [];
@@ -551,7 +570,8 @@ export default {
 }
 
 .part1-header .title {
-  margin-top: 29mm;
+  margin-top:20px;
+  padding-top: 29mm;
   width: 669px;
   font-size: 60px;
   height: 200px;

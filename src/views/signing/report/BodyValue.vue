@@ -4,7 +4,6 @@
       <div class="aside">
         <sideDemo headline="身体检测数值" color="rgba(143,130,188,1)" height="71mm"></sideDemo>
       </div>
-
       <div class="tableRight">
         <table style="min-height:71mm">
           <tr style="height:5.6mm;background-color:#E6E2F3;">
@@ -13,7 +12,7 @@
             <td style="width:7.5mm;text-align:center;border:1px solid #8F82BC;"></td>
             <td
               style="width:32.5mm;text-align:center;border:1px solid #8F82BC;background-color:#CCC5E2;"
-            >{{info.BodyValue.date_list[0]}}</td>
+            >{{info.BodyValue.date_list[0]==null?'':info.BodyValue.date_list[0]}}</td>
             <td style="width:32mm;text-align:center;border:1px solid #8F82BC;">{{info.BodyValue.date_list[1]}}</td>
             <td style="width:31mm;text-align:center;border:1px solid #8F82BC;">{{info.BodyValue.date_list[2]}}</td>
           </tr>
@@ -23,7 +22,7 @@
             <td style="border:1px solid #8F82BC;text-align:center;line-height:12px;">
             </td>
             <td v-for="(item,index) in info.BodyValue.height_list" :key="index" style="border:1px solid #8F82BC;text-align:center;">
-              <span>{{item}}</span>
+              <span>{{item==null?'':item}}</span>
             </td>
           </tr>
           <tr v-if="info.BodyValue.weight_list!==null" style="height:5.6mm;background-color:#E6E2F3;">
@@ -32,20 +31,20 @@
             <td style="border:1px solid #8F82BC;text-align:center;line-height:12px;">
             </td>
             <td style="border:1px solid #8F82BC;background-color:#CCC5E2;text-align:center;">
-              <span>{{info.BodyValue.weight_list[0]}}</span>
+              <span>{{info.BodyValue.weight_list[0]==null?'':info.BodyValue.weight_list[0]}}</span>
             </td>
             <td style="border:1px solid #8F82BC;text-align:center;">
-              <span>{{info.BodyValue.weight_list[1]}}</span>
+              <span>{{info.BodyValue.weight_list[1]==null?'':info.BodyValue.weight_list[1]}}</span>
             </td>
             <td style="border:1px solid #8F82BC;text-align:center;">
-              <span>{{info.BodyValue.weight_list[2]}}</span>
+              <span>{{info.BodyValue.weight_list[2]==null?'':info.BodyValue.weight_list[2]}}</span>
             </td>
           </tr>
           <tr v-if="info.BodyValue.BMI_list!==null" style="height:5.6mm;">
             <td style="border:1px solid #8F82BC;">&nbsp;&nbsp;&nbsp;BMI</td>
             <td style="border:1px solid #8F82BC;text-align:center;">18.5~23.9</td>
             <td style="border:1px solid #8F82BC;text-align:center;line-height:12px;">
-              <template v-if="info.BodyValue.BMI_list[0].length!=0">
+              <template v-if="info.BodyValue.BMI_list[0]!==null">
               <span v-if="info.BodyValue.BMI_list[0].data<18.5">
               <img style="width:5mm;height:5mm;" src="../../../assets/new/低2.png" alt />
               </span><span v-else-if="info.BodyValue.BMI_list[0].data>23.9">
@@ -56,7 +55,7 @@
               </template>
             </td>
             <td v-for="(item,index) in info.BodyValue.BMI_list" :key="index" style="border:1px solid #8F82BC;text-align:center;">
-              <span>{{item}}</span>
+              <span>{{item==null?'':item}}</span>
             </td>
           </tr>
           <tr v-if="info.BodyValue.waist_list!==null" style="height:5.6mm;background-color:#E6E2F3;">
@@ -65,7 +64,7 @@
             <td style="border:1px solid #8F82BC;text-align:center;"></td>
             <td v-for="(item,index) in info.BodyValue.waist_list" :key="index" style="border:1px solid #8F82BC;text-align:center;">
               <span
-              >{{item}}</span>
+              >{{item==null?'':item}}</span>
             </td>
           </tr>
           <tr style="border:2px solid #E4007F;">
@@ -197,9 +196,9 @@
                   <span class="leftText">
                     <div class="leftcontent">
                       <div>腹围</div>
-                      <span class="orange">男性85.0cm~女性90.0~</span>
-                      <span>内脏脂肪的面积</span>
-                      <div>无论男女100cm²以上</div>
+                      <span class="orange">男性102cm女性88cm</span>
+                      <span><br>内脏脂肪的面积</span>
+                      <div class="orange">无论男女100cm²以上</div>
                     </div>
                   </span>
                 </div>
@@ -208,7 +207,7 @@
                   <span class="leftText">
                     <div class="leftcontent">
                           <span class="orange">甘油三酯超过150mg/dl</span>
-                          <span>，以上/并且/或者高密度脂蛋白胆固醇</span>
+                          <span>以上/并且/或者高密度脂蛋白胆固醇</span>
                           <span class="orange">40mg/dL未满</span>
                         收缩期（最高）血压超过
                         <span class="orange">130mmHg以上</span>

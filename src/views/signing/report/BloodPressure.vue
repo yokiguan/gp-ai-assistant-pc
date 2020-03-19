@@ -10,9 +10,9 @@
             <td style="width:32mm;"></td>
             <td style="width:19mm;">参考范围</td>
             <td style="width:7.3mm;"></td>
-            <td style="width:22mm;">{{info.BloodPressure.date_list[0]}}</td>
-            <td style="width:22.5mm;">{{info.BloodPressure.date_list[1]}}</td>
-            <td style="width:22mm;">{{info.BloodPressure.date_list[2]}}</td>
+            <td style="width:22mm;">{{info.BloodPressure.date_list[0]==null?'':info.BloodPressure.date_list[0]}}</td>
+            <td style="width:22.5mm;">{{info.BloodPressure.date_list[1]==null?'':info.BloodPressure.date_list[1]}}</td>
+            <td style="width:22mm;">{{info.BloodPressure.date_list[2]==null?'':info.BloodPressure.date_list[2]}}</td>
             <td rowspan="4" style="width:65mm;">
               <div class="mypicOut">
                 <div class="mypic">我的图表</div>
@@ -31,10 +31,12 @@
             <td>收缩压</td>
             <td>90-140</td>
             <td>
-              <template v-if="info.BloodPressure.SBP_list[0].length!=0">
+              <template v-if="info.BloodPressure.SBP_list[0]!==null">
               <span v-if="info.BloodPressure.SBP_list[0]<90">
+              <img style="width:5mm;height:5mm;" src="../../../assets/new/超标2x.png" alt />
+              </span><span v-else-if="info.BloodPressure.SBP_list[0]>=120&&info.BloodPressure.SBP_list[0]<140">
               <img style="width:5mm;height:5mm;" src="../../../assets/new/低2.png" alt />
-              </span><span v-else-if="info.BloodPressure.SBP_list[0]>140">
+              </span><span v-else-if="info.BloodPressure.SBP_list[0]>=140">
               <img style="width:5mm;height:5mm;" src="../../../assets/new/超标2x.png" alt />
               </span><span v-else>
               <img style="width:5mm;height:5mm;" src="../../../assets/new/正常2.png" alt />
@@ -43,17 +45,20 @@
             </td>
               <td v-for="(item,index) in info.BloodPressure.SBP_list" :key="index">
                 <span
-                >{{item}}</span>
+                >{{item==null?'':item}}</span>
               </td>
           </tr>
+          
           <tr v-if="info.BloodPressure.DBP_list!==null" style="background-color:#E6E2F3;">
             <td>舒张压</td>
             <td>60-90</td>
             <td>
-              <template v-if="info.BloodPressure.DBP_list[0].length!=0">
+              <template v-if="info.BloodPressure.DBP_list[0]!==null">
               <span v-if="info.BloodPressure.DBP_list[0]<60">
+              <img style="width:5mm;height:5mm;" src="../../../assets/new/超标2x.png" alt />
+              </span><span v-else-if="info.BloodPressure.DBP_list[0]>=80&&info.BloodPressure.DBP_list[0]<90">
               <img style="width:5mm;height:5mm;" src="../../../assets/new/低2.png" alt />
-              </span><span v-else-if="info.BloodPressure.DBP_list[0]>90">
+              </span><span v-else-if="info.BloodPressure.DBP_list[0]>=90">
               <img style="width:5mm;height:5mm;" src="../../../assets/new/超标2x.png" alt />
               </span><span v-else>
               <img style="width:5mm;height:5mm;" src="../../../assets/new/正常2.png" alt />
@@ -61,13 +66,13 @@
               </template>
             </td>
                 <td style="background-color:#ccc5e2;">
-                  <span>{{info.BloodPressure.DBP_list[0]}}</span>
+                  <span>{{info.BloodPressure.DBP_list[0]==null?'':info.BloodPressure.DBP_list[0]}}</span>
                 </td>
                 <td>
-                  <span>{{info.BloodPressure.DBP_list[1]}}</span>
+                  <span>{{info.BloodPressure.DBP_list[1]==null?'':info.BloodPressure.DBP_list[1]}}</span>
                 </td>
                 <td>
-                  <span>{{info.BloodPressure.DBP_list[2]}}</span>
+                  <span>{{info.BloodPressure.DBP_list[2]==null?'':info.BloodPressure.DBP_list[2]}}</span>
                 </td>
           </tr>
           <tr v-if="info.BloodPressure.average_BP_list!==null" style="height:20.3mm;">
@@ -75,10 +80,10 @@
             <td>70-105</td>
             
             <td>
-              <template v-if="info.BloodPressure.average_BP_list[0].length!=0">
+              <template v-if="info.BloodPressure.average_BP_list[0]!==null">
               <span v-if="info.BloodPressure.average_BP_list[0]<70">
               <img style="width:5mm;height:5mm;" src="../../../assets/new/低2.png" alt />
-              </span><span v-else-if="info.BloodPressure.average_BP_list[0]>105">
+              </span><span v-else-if="info.BloodPressure.average_BP_list[0]>=105">
               <img style="width:5mm;height:5mm;" src="../../../assets/new/超标2x.png" alt />
               </span><span v-else>
               <img style="width:5mm;height:5mm;" src="../../../assets/new/正常2.png" alt />
@@ -87,7 +92,7 @@
             </td>
                 <td v-for="(item,index) in info.BloodPressure.average_BP_list" :key="index">
                   <span
-                  >{{item}}</span>
+                  >{{item==null?'':item}}</span>
                 </td>
           </tr>
         </table>

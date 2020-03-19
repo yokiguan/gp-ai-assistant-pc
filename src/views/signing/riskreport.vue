@@ -1,9 +1,9 @@
 <template>
   <div class="riskReport">
     <div class="feedBack">
-      <el-dialog class="dialogContent" title="病人反馈" :visible.sync="isTwice">
-        <div class="fb-title">上次健康管理意见反馈</div>
-        <div class="timeCycle">随访周期：{{feedbacks.period}}</div>
+      <el-dialog class="dialogContent" title="上次健康管理意见反馈" :visible.sync="isTwice">
+        <div class="dialog-content">
+        随访周期：{{feedbacks.period}}
         <el-form
           v-for="(item,key,index) in feedbacks.last_mission_list"
           :key="index"
@@ -11,22 +11,25 @@
         >
           <div class="mission">{{item.mission}}</div>
           <div v-for="(goal,val,pos) in item.smart_goal_list" :key="pos" class="smart_goal">
-            <div class="plan">{{goal.content}}</div>
+            <div class="plan">{{val+1}}.{{goal.content}}</div>
             <el-radio v-model="goal.status" label="是" key="1">是</el-radio>
             <el-radio v-model="goal.status" label="否" key="0">否</el-radio>
           </div>
         </el-form>
         <div slot="footer" class="dialog-footer">
-          <el-button style="margin:auto" type="primary" @click="planShowTwice">生成健康管理计划</el-button>
+          <el-button style="float:right" type="primary" @click="planShowTwice">生成健康管理计划</el-button>
+        </div>
         </div>
       </el-dialog>
     </div>
     <div class="planDrawer">
       <el-drawer size="48%" title="健康计划" :visible.sync="show">
+        <Loading v-if="loading"></Loading>
         <div class="drawer-content">
-          <el-input class="timeCycle" disabled v-model="cycle"></el-input>
-          <div :minselect="minselect">每个大项需选择{{minselect}}条建议提供给患者改善</div>
+          <el-input class="timeCycle" disabled v-model="cycle" :placeholder="cycle"></el-input>
           <div class="tips">根据病人的情况，我们建议：</div>
+          <div :minselect="minselect" class="minselect-tip">每个大项需选择{{minselect}}条建议提供给患者改善</div>
+          <div class="gray-tip">每个大项的计数是由通用选项加上其他建议中新增数目的总和</div>
           <div class="drawer-container">
             <div v-for="(item,i) in mission_detail_list" :key="i">
               <div class="firstStandard">
@@ -41,6 +44,7 @@
                 >
                   <el-collapse-item :title="key" :name="index">
                     <el-checkbox-group
+                      class="thirdStandard"
                       :max="minselect"
                       v-model="checkList[i]"
                       @change="handleChange"
@@ -105,34 +109,45 @@
       </el-drawer>
     </div>
     <div id="printContent">
-      <RiskReport :info="info"></RiskReport>
+      <img height="100%" width="100%" v-if="isNull" src='../../assets/null.png'/>
+      <RiskReport v-else :info="info"></RiskReport>
     </div>
     <div class="rightbar">
-      <div class="bar-btn">
-        <el-button type="primary" @click="print">打 印</el-button>
-        <el-button type="primary" @click="deliver_mission">发 送</el-button>
-      </div>
-      <el-button type="primary" @click="planShow">进入健康管理</el-button>
+      <el-button class="rightBarBtn" @click="print">打 印</el-button>
+      <el-button class="rightBarBtn" @click="planShow">进入健康管理</el-button>
     </div>
-    <el-dialog title="提示" :visible.sync="mobileTips" width="30%">
-      <div>网址：{{url}}</div>
-      <div>验证码：{{code}}</div>
+    <el-dialog title="无法生成报告" class="sendmsg-dialog" :visible.sync="isNull" width="40%">
+      <div class="send-title">该签约用户查找不到检验数据</div>
+      <div class="send-title">报告无法生成</div>
+      <div class="send-title">请完善签约用户的体检等相关检验值</div>
+      <div slot="footer" class="footer">
+        <el-button type="primary" @click="goHome">返回首页</el-button>
+        <el-button type="primary" @click="planShow">进入健康管理</el-button>
+      </div>
     </el-dialog>
   </div>
 </template>
 <script>
 import RiskReport from "./report";
+import Loading from '../../components/loading'
 export default {
   name: "riskReport",
   components: {
-    RiskReport
+    RiskReport,
+    Loading
   },
   data() {
     return {
+      isNull:false,
+      loading:true,
+      name:'',
+      phone:'',
+      edit: true,
       url: "",
       code: "",
       isdeliver: this.$store.state.isdeliver,
-      mobileTips: false,
+      mobileTips1: false,
+      mobileTips2: false,
       minselect: 0,
       activeName: [0],
       isTwice: false,
@@ -140,7 +155,7 @@ export default {
       show: false,
       checkList: [[]],
       doctor_missions: [],
-      cycle: "1个月",
+      cycle: "",
       feedbacks: [],
       mission_detail_list: [],
       mission_name_list: [],
@@ -151,68 +166,34 @@ export default {
     };
   },
   created() {
-    this.isReport(JSON.parse(this.$store.state.report))
+    this.isReport(JSON.parse(this.$store.state.report));
     this.info = JSON.parse(this.$store.state.report);
-    
   },
   watch: {},
   computed: {},
   methods: {
-    isReport(report){
-      if(!report.BodyValue&&!report.Urine&&!report.BloodPressure&&!report.BloodLipid&&!report.Liver&&!report.Hepatitis&&!report.Blood&&!report.Electrolyte&&!report.BloodSugar&&!report.Kidney){
-        this.show=true
-        this.$axios({
-          method: "get",
-          url: "/DHT/generate_smart_goal",
-          params: {
-            id_card: this.$route.query.id_card
-          },
-          headers: { session: this.$store.state.session }
-        }).then(res => {
-          if (res.data.data.need_show_up) {
-            this.show=false
-            this.isTwice = true;
-            // this.feedbacks = res.data.data.smart_goal_data;
-            this.feedbacks = JSON.parse(
-              JSON.stringify(res.data.data.smart_goal_data).replace(
-                /smart_goal/g,
-                "smart_goal_list"
-              )
-            );
-          } else
-            this.$axios({
-              method: "get",
-              url: "/DHT/mission_page",
-              params: {
-                id_card: this.$route.query.id_card
-              },
-              headers: { session: this.$store.state.session }
-            }).then(res => {
-              this.mission_detail_list = res.data.data.mission_detail_list;
-              this.mission_name_list = res.data.data.mission_name_list;
-              this.mission_name = this.mission_name_list[0];
-              this.cycle = res.data.data.period;
-              let a = new Array();
-              this.missions = new Array(res.data.data.mission_name_list.length)
-                .fill(null)
-                .map((item, index) => {
-                  var a = new Object();
-                  a.mission = this.mission_name_list[index];
-                  a.smart_goal_list = [];
-                  return a;
-                });
-              this.checkList = new Array(res.data.data.mission_name_list.length)
-                .fill(null)
-                .map(item => {
-                  return new Array();
-                });
-              this.doctor_missions = res.data.data.doctor_missions;
-              this.minselect = res.data.data.smart_goal_need_selected_num;
-              this.show = true;
-              this.isRisk = res.data.nCov;
-            });
-        });
+    isReport(report) {
+      if (
+        !report.BodyValue &&
+        !report.Urine &&
+        !report.BloodPressure &&
+        !report.BloodLipid &&
+        !report.Liver &&
+        !report.Hepatitis &&
+        !report.Blood &&
+        !report.Electrolyte &&
+        !report.BloodSugar &&
+        !report.Kidney
+      ) {
+        this.show = false;
+        this.isTwice = false;
+        this.isNull=true
       }
+    },
+    goHome(){
+      this.$router.push({
+        path:'/signing'
+      })
     },
     click(goal) {
       // console.log(goal)
@@ -222,7 +203,7 @@ export default {
       let bdHtml = window.document.body.innerHTML;
       let printHtml = window.document.getElementById("printContent").innerHTML;
       this.isdeliver = true;
-      this.$store.commit('setisdeliver',true)
+      this.$store.commit("setisdeliver", true);
       window.document.body.innerHTML = printHtml;
       window.print();
       window.location.reload();
@@ -268,8 +249,8 @@ export default {
       }
     },
     planShow() {
-      if (this.isdeliver) {
-        this.$axios({
+      this.isNull=false
+      this.$axios({
           method: "get",
           url: "/DHT/generate_smart_goal",
           params: {
@@ -286,7 +267,9 @@ export default {
                 "smart_goal_list"
               )
             );
-          } else
+          } else{
+            this.show = true;
+            this.loading=true;
             this.$axios({
               method: "get",
               url: "/DHT/mission_page",
@@ -299,6 +282,7 @@ export default {
               this.mission_name_list = res.data.data.mission_name_list;
               this.mission_name = this.mission_name_list[0];
               this.cycle = res.data.data.period;
+              this.isRisk = res.data.data.nCov;
               let a = new Array();
               this.missions = new Array(res.data.data.mission_name_list.length)
                 .fill(null)
@@ -315,12 +299,10 @@ export default {
                 });
               this.doctor_missions = res.data.data.doctor_missions;
               this.minselect = res.data.data.smart_goal_need_selected_num;
-              this.show = true;
-              this.isRisk = res.data.nCov;
+              this.loading=false
             });
+          }    
         });
-      } else
-        return alert("您未打印或发送报告至患者，请打印或发送后进入健康管理页面");
     },
     planShowTwice() {
       let feeds = JSON.parse(JSON.stringify(this.feedbacks));
@@ -343,6 +325,8 @@ export default {
         },
         headers: { session: this.$store.state.session }
       }).then(res => {
+        this.show = true;
+        this.loading=true;
         if (res.data.code == 200) this.isTwice = false;
         this.$axios({
           method: "get",
@@ -367,9 +351,11 @@ export default {
             .map(item => {
               return new Array();
             });
+          this.cycle = res.data.data.period;
           this.doctor_missions = res.data.data.doctor_missions;
+          this.isRisk = res.data.data.nCov;
           this.minselect = res.data.data.smart_goal_need_selected_num;
-          this.show = true;
+          this.loading=false
         });
       });
     },
@@ -409,10 +395,23 @@ export default {
             headers: { session: this.$store.state.session }
           }).then(res => {
             if (res.data.code == 200) {
-              this.$router.push({
-                path: "/signing/guidance",
-                query: {
+              this.$axios({
+                method: "get",
+                url: "/DHT/suggest_report",
+                params: {
                   id_card: this.$route.query.id_card
+                },
+                headers: { session: this.$store.state.session }
+              }).then(res => {
+                if (res.data.code != 200) alert(res.data.msg);
+                else {
+                  this.$store.commit("setGuidance", res.data.data);
+                  this.$router.push({
+                    path: "/signing/guidance",
+                    query: {
+                      id_card: this.$route.query.id_card
+                    }
+                  });
                 }
               });
             } else {
@@ -479,34 +478,49 @@ export default {
       this.checkList[index].splice(loc, 1);
       this.missions[index].smart_goal_list.splice(position, 1);
     },
-    deliver_mission() {
-      this.$axios({
-        method: "get",
-        url: "/DHT/send_report_code",
-        params: {
-          id_card: this.$route.query.id_card
-        },
-        headers: { session: this.$store.state.session }
-      }).then(res => {
-        if (res.data.code != 200) alert(res.data.msg);
-        else {
-          this.mobileTips = true;
-          this.url = res.data.data.url;
-          this.code = res.data.data.code;
-          this.isdeliver = true;
-          this.$store.commit('setisdeliver',true)
-        }
-      });
-    }
   }
 };
 </script>
+<style>
+.el-dialog__body{
+  padding-top: 0px !important;
+}
+.sendmsg-dialog .el-dialog__body{
+  padding-bottom: 0px !important;
+}
+.sendmsg .el-input{
+  width:200px;
+}
+.sendmsg .el-input .el-input__inner{
+  height: 30px;
+  width:200px;
+}
+</style>
 <style scoped>
 .tips {
-  font-size: 20px;
+  font-size: 18px;
+}
+.send-title{
+  font-size: 18px;
   font-weight: bold;
-  margin-top: 25px;
-  margin-bottom: 15px;
+}
+.send-info{
+  width:80px;
+}
+.sendmsg{
+  margin:10px 0;
+  font-size:14px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.minselect-tip{
+  font-size:22px;
+  font-weight: bold;
+}
+.gray-tip{
+  font-size:14px;
+  color:grey;
 }
 .riskReport {
   display: flex;
@@ -540,29 +554,21 @@ export default {
   margin-left: 20px;
 }
 .bar-btn {
-  width: 150px;
-  /* margin-left: 20px; */
-  margin-top: 20px;
+  width: 90%;
+  margin: 20px 5%;
   margin-bottom: 10px;
   display: flex;
   flex-direction: row;
 }
-.rightbar .el-button {
-  width: 200px;
-  margin-left: 20px;
+.rightbar .rightBarBtn {
+  width: 90%;
+  margin:15px 5% 0 5%;
   background-color: #4eb7e5;
+  color:white !important;
   font-size: 20px;
   font-weight: bold;
   height: 40px;
 }
-.bar-btn .el-button {
-  background-color: #4eb7e5;
-  font-size: 20px;
-  font-weight: bold;
-  width: 90px;
-  height: 40px;
-}
-
 .drawer-container {
   /* height: 100vh; */
   overflow: auto;
@@ -629,6 +635,9 @@ export default {
   flex-direction: column;
   padding: 5px;
 }
+.thirdStandard{
+  margin-left: 25px;
+}
 .adds {
   font-size: 16px;
   font-weight: bold;
@@ -661,6 +670,7 @@ export default {
 }
 .smart_goal .plan {
   width: 500px;
+  font-size:14px;
 }
 .feedback {
   margin-top: 10px;
@@ -672,11 +682,12 @@ export default {
 .feedback .mission {
   font-size: 20px;
   font-weight: bold;
-  margin-top: 5px;
+  margin: 5px 0 10px 0;
 }
 .dialog-footer {
-  margin-top: 15px;
-  margin-bottom: 15px;
+  margin-top: 25px;
+  height: 20px;
+  margin-bottom: 5px;
 }
 .drawer-footer {
   margin-top: 25px;

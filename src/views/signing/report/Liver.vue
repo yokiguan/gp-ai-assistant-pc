@@ -10,9 +10,9 @@
             <td style="width:40mm;"></td>
             <td style="width:36mm;">参考范围</td>
             <td style="width:7.3mm;"></td>
-            <td style="width:32.7mm;background-color:#CCC5E2;">{{info.Liver.date_list[0]}}</td>
-            <td style="width:32mm;">{{info.Liver.date_list[1]}}</td>
-            <td style="width:31mm;">{{info.Liver.date_list[2]}}</td>
+            <td style="width:32.7mm;background-color:#CCC5E2;">{{info.Liver.date_list[0]==null?'':info.Liver.date_list[0]}}</td>
+            <td style="width:32mm;">{{info.Liver.date_list[1]==null?'':info.Liver.date_list[1]}}</td>
+            <td style="width:31mm;">{{info.Liver.date_list[2]==null?'':info.Liver.date_list[2]}}</td>
           </tr>
           <tr v-if="info.Liver.AST!==null">
             <td>
@@ -23,7 +23,7 @@
             </td>
             <td>男15-45，女13-40 IU/L</td>
             <td>
-              <template v-if="info.Liver.AST[0].length!=0">
+              <template v-if="info.Liver.AST[0]!==null">
               <span v-if="(info.Liver.AST[0]<15&&info.PersonInfo.gender=='男')||(info.Liver.AST[0]<13&&info.PersonInfo.gender=='女')">
               <img style="width:5mm;height:5mm;" src="../../../assets/new/低2.png" alt />
               </span><span v-else-if="(info.Liver.AST[0]>45&&info.PersonInfo.gender=='男')||(info.Liver.AST[0]>40&&info.PersonInfo.gender=='女')">
@@ -34,7 +34,7 @@
               </template>
             </td>
             <td v-for="(item,index) in info.Liver.AST" :key="index">
-              <span>{{item}}</span>
+              <span>{{item==null?'':item}}</span>
             </td>
           </tr>
           <tr v-if="info.Liver.ALT!==null" style="background-color:#E6E2F3;">
@@ -46,7 +46,7 @@
             </td>
             <td>男9-50，女7-40 IU/L</td>
             <td>
-              <template v-if="info.Liver.ALT[0].length!=0">
+              <template v-if="info.Liver.ALT[0]!==null">
               <span v-if="(info.Liver.ALT[0]<9&&info.PersonInfo.gender=='男')||(info.Liver.ALT[0]<7&&info.PersonInfo.gender=='女')">
               <img style="width:5mm;height:5mm;" src="../../../assets/new/低2.png" alt />
               </span><span v-else-if="(info.Liver.ALT[0]>50&&info.PersonInfo.gender=='男')||(info.Liver.ALT[0]>40&&info.PersonInfo.gender=='女')">
@@ -57,13 +57,13 @@
               </template>
             </td>
             <td style="background-color:#ccc5e2;">
-              <span>{{info.Liver.ALT[0]}}</span>
+              <span>{{info.Liver.ALT[0]==null?'':info.Liver.ALT[0]}}</span>
             </td>
             <td>
-              <span>{{info.Liver.ALT[1]}}</span>
+              <span>{{info.Liver.ALT[1]==null?'':info.Liver.ALT[1]}}</span>
             </td>
             <td>
-              <span>{{info.Liver.ALT[2]}}</span>
+              <span>{{info.Liver.ALT[2]==null?'':info.Liver.ALT[2]}}</span>
             </td>
           </tr>
           <tr style="background-color:#E6E2F3;">
@@ -121,7 +121,7 @@
             </td>
             <td>40-55g/L</td>
             <td>
-              <template v-if="info.Liver.ALB[0].length!=0">
+              <template v-if="info.Liver.ALB[0]!==null">
               <span v-if="info.Liver.ALB[0]<40">
               <img style="width:5mm;height:5mm;" src="../../../assets/new/低2.png" alt />
               </span><span v-else-if="info.Liver.ALB[0]>55">
@@ -132,7 +132,7 @@
               </template>
             </td>
             <td v-for="(item,index) in info.Liver.ALB" :key="index">
-              <span>{{item}}</span>
+              <span>{{item==null?'':item}}</span>
             </td>
           </tr>
           <tr style="background-color:#E6E2F3;">
@@ -151,7 +151,7 @@
             </td>
             <td>3.4-17.1μmol/L</td>
             <td>
-              <template v-if="info.Liver.TBIL[0].length!=0">
+              <template v-if="info.Liver.TBIL[0]!=null">
               <span v-if="info.Liver.TBIL[0]<3.4">
               <img style="width:5mm;height:5mm;" src="../../../assets/new/低2.png" alt />
               </span><span v-else-if="info.Liver.TBIL[0]>17.1">
@@ -162,13 +162,13 @@
               </template>
             </td>
             <td style="background-color:#ccc5e2;">
-              <span>{{info.Liver.TBIL[0]}}</span>
+              <span>{{info.Liver.TBIL[0]==null?'':info.Liver.TBIL[0]}}</span>
             </td>
             <td>
-              <span>{{info.Liver.TBIL[1]}}</span>
+              <span>{{info.Liver.TBIL[1]==null?'':info.Liver.TBIL[1]}}</span>
             </td>
             <td>
-              <span>{{info.Liver.TBIL[2]}}</span>
+              <span>{{info.Liver.TBIL[2]==null?'':info.Liver.TBIL[2]}}</span>
             </td>
           </tr>
           <tr style="background-color:#E6E2F3;">

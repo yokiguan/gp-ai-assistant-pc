@@ -12,16 +12,16 @@
             <td style="width:7.5mm;text-align:center;border:1px solid #8F82BC;"></td>
             <td
               style="width:32.5mm;text-align:center;border:1px solid #8F82BC;background-color:#CCC5E2;"
-            >{{info.BloodLipid.date_list[0]}}</td>
-            <td style="width:32mm;text-align:center;border:1px solid #8F82BC;">{{info.BloodLipid.date_list[1]}}</td>
-            <td style="width:31mm;text-align:center;border:1px solid #8F82BC;">{{info.BloodLipid.date_list[2]}}</td>
+            >{{info.BloodLipid.date_list[0]==null?'':info.BloodLipid.date_list[0]}}</td>
+            <td style="width:32mm;text-align:center;border:1px solid #8F82BC;">{{info.BloodLipid.date_list[1]==null?'':info.BloodLipid.date_list[1]}}</td>
+            <td style="width:31mm;text-align:center;border:1px solid #8F82BC;">{{info.BloodLipid.date_list[2]==null?'':info.BloodLipid.date_list[2]}}</td>
           </tr>
           
           <tr v-if="info.BloodLipid.TC_list!==null" style="height:5.6mm;">
             <td style="border:1px solid #8F82BC;">&nbsp;&nbsp;&nbsp;总胆固醇</td>
             <td style="border:1px solid #8F82BC;text-align:center;">0-5.18mmol/L</td>
             <td style="border:1px solid #8F82BC;text-align:center;line-height:12px;">
-              <template v-if="info.BloodLipid.TC_list[0].length!=0">
+              <template v-if="info.BloodLipid.TC_list[0]!==null">
                 <span v-if="info.BloodLipid.TC_list[0]>5.18">
                   <img style="width:5mm;height:5mm;" src="../../../assets/new/超标2x.png" alt />
                 </span>
@@ -37,11 +37,13 @@
           </tr>
           <tr v-if="info.BloodLipid.TG_list!==null" style="height:5.6mm;background-color:#E6E2F3;">
             <td style="border:1px solid #8F82BC;">&nbsp;&nbsp;&nbsp;甘油三酯</td>
-            <td style="border:1px solid #8F82BC;text-align:center;">0-1.7mmol/L</td>
+            <td style="border:1px solid #8F82BC;text-align:center;">0-1.76mmol/L</td>
             <td style="border:1px solid #8F82BC;text-align:center;line-height:12px;">
               <template v-if="info.BloodLipid.TG_list[0].length!=0">
-                <span v-if="info.BloodLipid.TG_list[0]>1.7">
+                <span v-if="info.BloodLipid.TG_list[0]>=2.27">
                   <img style="width:5mm;height:5mm;" src="../../../assets/new/超标2x.png" alt />
+                </span><span v-else-if="info.BloodLipid.TG_list[0]>1.76&&info.BloodLipid.TG_list[0]<2.27">
+                  <img style="width:5mm;height:5mm;" src="../../../assets/new/低2.png" alt />
                 </span>
                 <span v-else>
                   <img style="width:5mm;height:5mm;" src="../../../assets/new/正常2.png" alt />
@@ -49,13 +51,13 @@
               </template>
             </td>
             <td style="border:1px solid #8F82BC;background-color:#CCC5E2;text-align:center;">
-              <span>{{info.BloodLipid.TG_list[0]}}</span>
+              <span>{{info.BloodLipid.TG_list[0]==null?'':info.BloodLipid.TG_list[0]}}</span>
             </td>
             <td style="border:1px solid #8F82BC;text-align:center;">
-              <span>{{info.BloodLipid.TG_list[1]}}</span>
+              <span>{{info.BloodLipid.TG_list[1]==null?'':info.BloodLipid.TG_list[1]}}</span>
             </td>
             <td style="border:1px solid #8F82BC;text-align:center;">
-              <span>{{info.BloodLipid.TG_list[2]}}</span>
+              <span>{{info.BloodLipid.TG_list[2]==null?'':info.BloodLipid.TG_list[2]}}</span>
             </td>
           </tr>
           <tr v-if="info.BloodLipid.HDL_list!==null" style="height:11mm;">
@@ -65,7 +67,7 @@
             </td>
             <td style="border:1px solid #8F82BC;text-align:center;">＞1.04mmol/L</td>
             <td style="border:1px solid #8F82BC;text-align:center;line-height:12px;">
-              <template v-if="info.BloodLipid.HDL_list[0].length!=0">
+              <template v-if="info.BloodLipid.HDL_list[0]!==null">
                 <span v-if="info.BloodLipid.HDL_list[0]<1.04">
                   <img style="width:5mm;height:5mm;" src="../../../assets/new/低2.png" alt />
                 </span>
@@ -76,7 +78,7 @@
             </td>
             <td style="border:1px solid #8F82BC;text-align:center;" v-for="(item,index) in info.BloodLipid.HDL_list" :key="index">
               <span
-              >{{item}}</span>
+              >{{item==null?'':item}}</span>
             </td>
           </tr>
           <tr v-if="info.BloodLipid.LDL_list!==null" style="height:11mm;background-color:#E6E2F3;">
@@ -86,7 +88,7 @@
             </td>
             <td style="border:1px solid #8F82BC;text-align:center;">0-3.37mmol/L</td>
             <td style="border:1px solid #8F82BC;text-align:center;line-height:12px;">
-              <template v-if="info.BloodLipid.LDL_list[0].length!=0">
+              <template v-if="info.BloodLipid.LDL_list[0]!==null">
                 <span v-if="info.BloodLipid.LDL_list[0]>3.37">
                   <img style="width:5mm;height:5mm;" src="../../../assets/new/超标2x.png" alt />
                 </span>
@@ -96,13 +98,13 @@
               </template>
             </td>
             <td style="border:1px solid #8F82BC;background-color:#CCC5E2;text-align:center;">
-              <span>{{info.BloodLipid.LDL_list[0]}}</span>
+              <span>{{info.BloodLipid.LDL_list[0]==null?'':info.BloodLipid.LDL_list[0]}}</span>
             </td>
             <td style="border:1px solid #8F82BC;text-align:center;">
-              <span>{{info.BloodLipid.LDL_list[1]}}</span>
+              <span>{{info.BloodLipid.LDL_list[1]==null?'':info.BloodLipid.LDL_list[1]}}</span>
             </td>
             <td style="border:1px solid #8F82BC;text-align:center;">
-              <span>{{info.BloodLipid.LDL_list[2]}}</span>
+              <span>{{info.BloodLipid.LDL_list[2]==null?'':info.BloodLipid.LDL_list[2]}}</span>
             </td>
           </tr>
           <tr style="border:2px solid #E4007F;">

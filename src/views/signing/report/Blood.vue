@@ -10,17 +10,17 @@
             <td style="width:40mm;"></td>
             <td style="width:36mm;">参考范围</td>
             <td style="width:7.3mm;"></td>
-            <td style="width:32.7mm;background-color:#CCC5E2;">{{info.Blood.date_list[0]}}</td>
-            <td style="width:32mm;">{{info.Blood.date_list[1]}}</td>
-            <td style="width:31mm;">{{info.Blood.date_list[2]}}</td>
+            <td style="width:32.7mm;background-color:#CCC5E2;">{{info.Blood.date_list[0]==null?'':info.Blood.date_list[0]}}</td>
+            <td style="width:32mm;">{{info.Blood.date_list[1]==null?'':info.Blood.date_list[1]}}</td>
+            <td style="width:31mm;">{{info.Blood.date_list[2]==null?'':info.Blood.date_list[2]}}</td>
           </tr>
           <tr v-if="info.Blood.Hemoglobin!==null">
             <td>
               <div>血红蛋白</div>
             </td>
             <td>男 130-175 g/L<br>女 115-150 g/L</td>
-            <td>
-              <template v-if="info.Blood.Hemoglobin[0].length!=0">
+            <td> 
+              <template v-if="info.Blood.Hemoglobin[0]!==null">
               <span v-if="(info.Blood.Hemoglobin[0]<130&&info.PersonInfo.gender=='男')||(info.Blood.Hemoglobin[0]<115&&info.PersonInfo.gender=='女')">
               <img style="width:5mm;height:5mm;" src="../../../assets/new/低2.png" alt />
               </span><span v-else-if="(info.Blood.Hemoglobin[0]>175&&info.PersonInfo.gender=='男')||(info.Blood.Hemoglobin[0]>150&&info.PersonInfo.gender=='女')">
@@ -31,7 +31,7 @@
               </template>
             </td>
             <td v-for="(item,index) in info.Blood.Hemoglobin" :key="index">
-              <span>{{item}}</span>
+              <span>{{item==null?'':item}}</span>
             </td>
           </tr>
           <tr style="background-color:#E6E2F3;">
@@ -71,7 +71,7 @@
               <sup>9</sup>/L
             </td>
             <td>
-              <template v-if="info.Blood.WBC[0].length!=0">
+              <template v-if="info.Blood.WBC[0]!==null">
               <span v-if="info.Blood.WBC[0]<3.5">
               <img style="width:5mm;height:5mm;" src="../../../assets/new/低2.png" alt />
               </span><span v-else-if="info.Blood.WBC[0]>9.5">
@@ -82,13 +82,13 @@
               </template>
             </td>
             <td style="background-color:#ccc5e2;">
-              <span>{{info.Blood.WBC[0]}}</span>
+              <span>{{info.Blood.WBC[0]==null?'':info.Blood.WBC[0]}}</span>
             </td>
             <td>
-              <span>{{info.Blood.WBC[1]}}</span>
+              <span>{{info.Blood.WBC[1]==null?'':info.Blood.WBC[1]}}</span>
             </td>
             <td>
-              <span>{{info.Blood.WBC[2]}}</span>
+              <span>{{info.Blood.WBC[2]==null?'':info.Blood.WBC[2]}}</span>
             </td>
           </tr>
           <tr v-if="info.Blood.Platelet!==null">
@@ -100,7 +100,7 @@
               <sup>9</sup>/L
             </td>
             <td>
-              <template v-if="info.Blood.Platelet[0].length!=0">
+              <template v-if="info.Blood.Platelet[0]!==null">
               <span v-if="info.Blood.Platelet[0].data<125">
               <img style="width:5mm;height:5mm;" src="../../../assets/new/低2.png" alt />
               </span><span v-else-if="info.Blood.Platelet[0].data>350">
@@ -111,7 +111,7 @@
               </template>
             </td>
             <td v-for="(item,index) in info.Blood.Platelet" :key="index">
-              <span>{{item}}</span>
+              <span>{{item==null?'':item}}</span>
             </td>
           </tr>
           <tr style="background-color:#E6E2F3;">

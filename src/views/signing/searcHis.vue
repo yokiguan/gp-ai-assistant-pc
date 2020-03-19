@@ -2,16 +2,16 @@
   <div class="signing">
     <div class="sign-title">
       <!-- <img src="../../assets/logo.png" class="logo" /> -->
-      慢病风险评估及健康生活管理计划
+      慢病风险评估 · 健康生活管理
     </div>
     <div class="sign-search">
       <el-input type="text" placeholder="请输入身份证号" v-model="id_card" />
       <div class="btn-group">
-        <el-button type="primary" class="historysearch" @click="getData">查询his信息</el-button>
-        <el-button type="primary" class="generate" @click="goGenerate">生成</el-button>
+        <el-button class="historysearch" @click="getData">查询门诊信息</el-button>
+        <el-button class="generate" @click="goGenerate">生成</el-button>
       </div>
     </div>
-    <el-dialog :visible.sync="show" width="80%" :modal-append-to-body="false">
+    <el-dialog class='historyTable' :visible.sync="show" width="80%" :title='"患者："+name+period+"内门诊数据"' :modal-append-to-body="false">
       <div class="list">
         <div class="list-tab">
           <el-table border :data="historyList">
@@ -103,10 +103,14 @@ export default {
     return {
       id_card: "",
       show: false,
-      historyList: []
+      historyList: [],
+      name:'',
+      period:''
     };
   },
-  created() {},
+  created() {
+    this.$store.commit('setisdeliver',false)
+  },
   watch: {},
   computed: {},
   methods: {
@@ -123,7 +127,9 @@ export default {
         },
         headers: { session: window.sessionStorage.getItem("session") }
       }).then(res => {
-        this.historyList = res.data.data;
+        this.historyList = res.data.data.result_list;
+        this.name=res.data.data.name;
+        this.period=res.data.data.last_visit_period;
       });
     },
     goGenerate() {
@@ -152,6 +158,14 @@ export default {
 };
 </script>
 <style>
+.historyTable .el-dialog .el-dialog__body{
+  padding-top:0px !important
+}
+.historyTable td, .historyTable th.is-leaf{
+  background: rgba(78, 183, 229, 1);
+  color:white;
+  height: 40px;
+}
 .signing {
   background-color: white;
   position: fixed;
@@ -160,14 +174,14 @@ export default {
   transform: translate(-50%, -50%);
   height: 100%;
   width: 100%;
-  background:url('../../assets/bg.png');
+  background:linear-gradient(90deg, rgb(177,239,235), rgb(198,207,240));
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
 }
 .sign-title {
-  color: rgba(0, 110, 182, 1);
+  color: rgba(78, 183, 229, 1);
   font-size: 60px;
   font-weight: 900;
   margin: 0 auto;
@@ -177,58 +191,51 @@ export default {
   flex-direction: row;
 }
 .sign-search {
-  width: 721px;
+  width: 805px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  margin-top: 20px;
+  margin-top: 40px;
 }
-.sign-search .el-input__inner {
-  width: 720px;
-  color: rgba(0, 110, 182, 1);
-  border: rgba(0, 110, 182, 1) solid 1px;
-  border-radius: 4px;
-  font-size: 14px;
+.sign-search .el-input .el-input__inner {
+  width: 805px;
+  height: 60px;
+  color: rgba(78, 183, 229, 1) !important;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight:bold;
   text-align: center;
 }
 .el-input__inner::-webkit-input-placeholder {
-  color: rgba(0, 110, 182, 1);
+  color: rgba(78, 183, 229, 1) !important;;
 }
 .el-input__inner::-moz-input-placeholder {
-  color: rgba(0, 110, 182, 1);
+  color: rgba(78, 183, 229, 1) !important;
 }
 .el-input__inner::-ms-input-placeholder {
-  color: rgba(0, 110, 182, 1);
+  color: rgba(78, 183, 229, 1) !important;
 }
 .btn-group {
   margin-top: 20px;
   display: flex;
   align-items: center;
-  width: 721px;
+  width: 805px;
   justify-content: space-between;
   flex-direction: row;
 }
 .btn-group .el-button {
-  width: 350px;
-  height: 48px;
+  width: 395px;
+  height: 60px;
   color: rgba(255, 255, 255, 1);
-  background-color:#4EB7E5;
-  border-radius: 4px;
+  background-color:rgba(78, 183, 229, 1);
+  border-radius: 12px;
   font-size: 20px;
   line-height: 150%;
   text-align: center;
   font-weight: bold;
 }
-p {
-  width: 845px;
-  height: 82px;
-  color: rgba(0, 110, 182, 1);
-  font-size: 55px;
-  line-height: 150%;
-  text-align: left;
-  font-weight: bold;
-}
+
 .logo {
   width: 150px;
   height: 150px;

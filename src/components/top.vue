@@ -2,11 +2,11 @@
   <div class="top">
     <div class="top-L">
       <img style="height:35px;width:30px" src="../assets/nav.png" />
-      <div class="top-L-title">家庭医生智能助手——{{name}}</div>
+      <div class="top-L-title">家庭医生智能助手 · {{name}}</div>
     </div>
     <div class="top-R">
-      <div>日期：{{time}}|{{doctorname}}</div>
-      <div @click="exit">退出</div>
+      <div>{{time}} | {{doctorname}}</div>
+      <img width='16' height='16' style="margin-left:5px" @click="exit" src='../assets/退出.png'/>
     </div>
   </div>
 </template>

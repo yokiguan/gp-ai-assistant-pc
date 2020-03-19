@@ -1,6 +1,7 @@
 <template>
   <div class="module-container">
     <div class="part1">
+      
       <div class="aside">
         <sideDemo1 color="#8F82BC" height="34.5mm" headline="尿检检测数值"></sideDemo1>
       </div>
@@ -10,9 +11,9 @@
             <td style="width:40mm;"></td>
             <td style="width:36mm;">参考范围</td>
             <td style="width:7.3mm;"></td>
-            <td style="width:32.7mm;">{{info.Urine.date_list[0]}}</td>
-            <td style="width:32mm;">{{info.Urine.date_list[1]}}</td>
-            <td style="width:31mm;">{{info.Urine.date_list[2]}}</td>
+            <td style="width:32.7mm;">{{info.Urine.date_list[0]==null?'':info.Urine.date_list[0]}}</td>
+            <td style="width:32mm;">{{info.Urine.date_list[1]==null?'':info.Urine.date_list[1]}}</td>
+            <td style="width:31mm;">{{info.Urine.date_list[2]==null?'':info.Urine.date_list[2]}}</td>
           </tr>
           <tr v-if="info.Urine.uma!==null">
             <td>蛋白</td>
@@ -21,7 +22,7 @@
               
             </td>
               <td v-for="(item,index) in info.Urine.uma" :key="index">
-                <span>{{item}}</span>
+                <span>{{item==null?'':item}}</span>
               </td>
           </tr>
           <tr v-if="info.Urine.uob!==null" style="background-color:#E6E2F3;">
@@ -31,13 +32,13 @@
               
             </td>
               <td style="background-color:#ccc5e2;">
-                <span>{{info.Urine.uob[0]}}</span>
+                <span>{{info.Urine.uob[0]==null?'':info.Urine.uob[0]}}</span>
               </td>
               <td>
-                <span>{{info.Urine.uob[1]}}</span>
+                <span>{{info.Urine.uob[1]==null?'':info.Urine.uob[1]}}</span>
               </td>
               <td>
-                <span>{{info.Urine.uob[2]}}</span>
+                <span>{{info.Urine.uob[2]==null?'':info.Urine.uob[2]}}</span>
               </td>
           </tr>
           <tr>

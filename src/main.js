@@ -22,7 +22,7 @@ Vue.prototype.$axios = axios
 Vue.prototype.html2canvas = html2canvas
 Vue.prototype.jsPdf = jsPdf
 // axios.defaults.baseURL = 'https://www.jiandaohealth.com/DHT/'
-axios.defaults.withCredentials = true
+axios.defaults.withCredentials = false
 axios.defaults.headers.post['Content-Type'] ='application/json';
 new Vue({
   el: '#app',

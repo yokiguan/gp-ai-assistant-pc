@@ -1,11 +1,9 @@
 <template>
-  <div>
     <div class="demo" :style="{background:color,height:height}">
       <span class="text" >
         {{headline}}
       </span>
     </div>
-  </div>
 </template>
 
 <script>
@@ -25,7 +23,7 @@
     border-radius: 21px;
     line-height: 20px;
     text-align: center;
-
+    height: 100%;
   }
     .demo::before{
         content:'';

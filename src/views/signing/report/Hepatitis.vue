@@ -11,9 +11,9 @@
             <td style="width:36mm;">参考范围
             </td>
             <td style="width:7.3mm;"></td>
-            <td style="width:32.7mm;background-color:#CCC5E2;">{{info.Hepatitis.date_list[0]}}</td>
-            <td style="width:32mm;">{{info.Hepatitis.date_list[1]}}</td>
-            <td style="width:31mm;">{{info.Hepatitis.date_list[2]}}</td>
+            <td style="width:32.7mm;background-color:#CCC5E2;">{{info.Hepatitis.date_list[0]==null?'':info.Hepatitis.date_list[0]}}</td>
+            <td style="width:32mm;">{{info.Hepatitis.date_list[1]==null?'':info.Hepatitis.date_list[1]}}</td>
+            <td style="width:31mm;">{{info.Hepatitis.date_list[2]==null?'':info.Hepatitis.date_list[2]}}</td>
           </tr>
           <tr v-if="info.Hepatitis.hbs_ag!==null">
             <td>
@@ -23,9 +23,9 @@
             <td>
               
             </td>
-              <td v-for="(item,index) in info.Hepatitis" :key="index">
+              <td v-for="(item,index) in info.Hepatitis.hbs_ag" :key="index">
                 <span
-                >{{item}}</span>
+                >{{item==null?'':item}}</span>
               </td>
           </tr>
           <tr v-if="info.Hepatitis.hbs_ab!==null" style="background-color:#E6E2F3;">
@@ -37,13 +37,13 @@
               
             </td>
             <td style="background-color:#ccc5e2;">
-              <span>{{info.Hepatitis.hbs_ab[0]}}</span>
+              <span>{{info.Hepatitis.hbs_ab[0]==null?'':info.Hepatitis.hbs_ab[0]}}</span>
             </td>
             <td>
-              <span>{{info.Hepatitis.hbs_ab[1]}}</span>
+              <span>{{info.Hepatitis.hbs_ab[1]==null?'':info.Hepatitis.hbs_ab[1]}}</span>
             </td>
             <td>
-              <span>{{info.Hepatitis.hbs_ab[2]}}</span>
+              <span>{{info.Hepatitis.hbs_ab[2]==null?'':info.Hepatitis.hbs_ab[2]}}</span>
             </td>
           </tr>
           <tr v-if="info.Hepatitis.HCV_ab!==null">
@@ -55,7 +55,7 @@
               
             </td>
             <td v-for="(item,index) in info.Hepatitis.HCV_ab" :key="index">
-              <span>{{item}}</span>
+              <span>{{item==null?'':item}}</span>
             </td>
           </tr>
         </table>

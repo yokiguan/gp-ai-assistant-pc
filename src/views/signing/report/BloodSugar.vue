@@ -12,15 +12,15 @@
             <td style="width:7.5mm;text-align:center;border:1px solid #8F82BC;"></td>
             <td
               style="width:32.5mm;text-align:center;border:1px solid #8F82BC;background-color:#CCC5E2;"
-            >{{info.BloodSugar.date_list[0]}}</td>
-            <td style="width:32mm;text-align:center;border:1px solid #8F82BC;">{{info.BloodSugar.date_list[1]}}</td>
-            <td style="width:31mm;text-align:center;border:1px solid #8F82BC;">{{info.BloodSugar.date_list[2]}}</td>
+            >{{info.BloodSugar.date_list[0]==null?'':info.BloodSugar.date_list[0]}}</td>
+            <td style="width:32mm;text-align:center;border:1px solid #8F82BC;">{{info.BloodSugar.date_list[1]==null?'':info.BloodSugar.date_list[1]}}</td>
+            <td style="width:31mm;text-align:center;border:1px solid #8F82BC;">{{info.BloodSugar.date_list[2]==null?'':info.BloodSugar.date_list[2]}}</td>
           </tr>
           <tr v-if="info.BloodSugar.FBS!==null" style="height:5.6mm;">
             <td>血糖</td>
             <td style="border:1px solid #8F82BC;text-align:center;">＜11.1</td>
             <td style="border:1px solid #8F82BC;text-align:center;line-height:12px;">
-              <template v-if="info.BloodSugar.FBS[0].length!==0">
+              <template v-if="info.BloodSugar.FBS[0]!==null">
               <span v-if="info.BloodSugar.FBS[0]>11.1">
               <img style="width:5mm;height:5mm;" src="../../../assets/new/超标2x.png" alt />
               </span><span v-else>
@@ -29,13 +29,13 @@
               </template>
             </td>
             <td style="border:1px solid #8F82BC;background-color:#CCC5E2;text-align:center;">
-              <span>{{info.BloodSugar.FBS[0]}}</span>
+              <span>{{info.BloodSugar.FBS[0]==null?'':info.BloodSugar.FBS[0]}}</span>
             </td>
             <td style="border:1px solid #8F82BC;text-align:center;">
-              <span>{{info.BloodSugar.FBS[1]}}</span>
+              <span>{{info.BloodSugar.FBS[1]==null?'':info.BloodSugar.FBS[1]}}</span>
             </td>
             <td style="border:1px solid #8F82BC;text-align:center;">
-              <span>{{info.BloodSugar.FBS[2]}}</span>
+              <span>{{info.BloodSugar.FBS[2]==null?'':info.BloodSugar.FBS[2]}}</span>
             </td>
           </tr>
           <tr v-if="info.BloodSugar.GU!==null" style="height:6.6 mm;background-color:#E6E2F3;">
@@ -45,20 +45,20 @@
               
             </td>
             <td style="border:1px solid #8F82BC;background-color:#CCC5E2;text-align:center;">
-              <span v-if="GU.length>=1">{{info.BloodSugar.GU[0]}}</span>
+              <span v-if="GU.length>=1">{{info.BloodSugar.GU[0]==null?'':info.BloodSugar.GU[0]}}</span>
             </td>
             <td style="border:1px solid #8F82BC;text-align:center;">
-              <span v-if="GU.length>=2">{{info.BloodSugar.GU[1]}}</span>
+              <span v-if="GU.length>=2">{{info.BloodSugar.GU[1]==null?'':info.BloodSugar.GU[1]}}</span>
             </td>
             <td style="border:1px solid #8F82BC;text-align:center;">
-              <span v-if="GU.length>=3">{{info.BloodSugar.GU[2]}}</span>
+              <span v-if="GU.length>=3">{{info.BloodSugar.GU[2]==null?'':info.BloodSugar.GU[2]}}</span>
             </td>
           </tr>
           <tr v-if="info.BloodSugar.HbAlc!==null" style="height:6.1mm;background-color:#E6E2F3;">
             <td style="border:1px solid #8F82BC;text-align:left;">糖化血红蛋白(HbAlc)</td>
             <td style="border:1px solid #8F82BC;text-align:center;">4.0~5.6</td>
             <td style="border:1px solid #8F82BC;text-align:center;line-height:12px;">
-              <template v-if="info.BloodSugar.HbAlc[0].length!==0">
+              <template v-if="info.BloodSugar.HbAlc[0]!==null">
               <span v-if="info.BloodSugar.HbAlc[0]<4.0">
               <img style="width:5mm;height:5mm;" src="../../../assets/new/低2.png" alt />
               </span><span v-else-if="info.BloodSugar.HbAlc[0]>5.6">
@@ -69,13 +69,13 @@
               </template>
             </td>
             <td style="border:1px solid #8F82BC;background-color:#CCC5E2;text-align:center;">
-              <span>{{info.BloodSugar.HbAlc[0]}}</span>
+              <span>{{info.BloodSugar.HbAlc[0]==null?'':info.BloodSugar.HbAlc[0]}}</span>
             </td>
             <td style="border:1px solid #8F82BC;text-align:center;">
-              <span>{{info.BloodSugar.HbAlc[1]}}</span>
+              <span>{{info.BloodSugar.HbAlc[1]==null?'':info.BloodSugar.HbAlc[1]}}</span>
             </td>
             <td style="border:1px solid #8F82BC;text-align:center;">
-              <span>{{info.BloodSugar.HbAlc[2]}}</span>
+              <span>{{info.BloodSugar.HbAlc[2]==null?'':info.BloodSugar.HbAlc[2]}}</span>
             </td>
           </tr>
         </table>

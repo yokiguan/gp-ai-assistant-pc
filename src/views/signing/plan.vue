@@ -14,7 +14,6 @@
             <div>姓名</div>
             <span>Name</span>
           </div>
-          <!-- <p>{{this.$state.report.info.name[1]}}</p> -->
           <el-col class="info_data">{{data.info.name}}</el-col>
         </el-col>
         <el-col :span="5" class="person_info">
@@ -22,7 +21,6 @@
             <div>性别</div>
             <span>Gender</span>
           </div>
-          <!-- <p>{{this.$state.report.info.gender}}</p> -->
           <el-col class="info_data">{{data.info.gender}}</el-col>
         </el-col>
         <el-col :span="5" class="person_info">
@@ -30,7 +28,6 @@
             <el-col>年龄</el-col>
             <el-col>Age</el-col>
           </el-row>
-          <!-- <p>{{this.$state.report.info.age}}</p> -->
           <el-col class="info_data">{{data.info.age}}</el-col>
         </el-col>
         <el-col :span="9" class="person_info">
@@ -39,7 +36,6 @@
             <el-col>ID Number</el-col>
           </el-row>
           <el-col class="info_data">{{this.$route.query.id_card}}</el-col>
-          <!-- <p>{{info.id_card}}</p> -->
         </el-col>
       </el-row>
       <h2>健康管理指导</h2>
@@ -49,6 +45,7 @@
           <a class="cn">本次随访任务</a>
           <a class="en">Daily Task</a>
         </div>
+
         <div class="container">
           <el-row class="part-outbox">
             * 此期间（{{data.start_time}}-{{data.end_time}}）您需要完成以下任务：
@@ -138,7 +135,8 @@
 </template>
 <script>
 export default {
-  created() {  },
+  created() { 
+   },
   data() {
     return {
       data: JSON.parse(this.$store.state.guidance)

@@ -2,7 +2,7 @@
 <div class="module-container">
 <div class="part1">
       <div class="aside">
-        <sideDemo headline="近期风险" color="rgba(110,174,139,1)" height="30mm"></sideDemo>
+        <sideDemo headline="近期风险" color="rgba(110,174,139,1)"></sideDemo>
       </div>
       <div class="tableRight">
         <el-col :span='24' class="recentRisk">
@@ -21,6 +21,7 @@ export default{
   }
 }
 </script>
+
 <style lang="scss" scoped>
 .recentRisk{
   font-size:18px;
@@ -55,6 +56,7 @@ export default{
 .aside {
   display: inline-block;
   vertical-align: top;
+  height: 150.4px;
 }
 
 .tableRight {

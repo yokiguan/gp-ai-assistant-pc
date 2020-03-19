@@ -10,9 +10,9 @@
             <td style="width:35mm;"></td>
             <td style="width:44mm;">参考范围</td>
             <td style="width:7.3mm;"></td>
-            <td style="width:32.7mm;background-color:#CCC5E2;">{{info.Kidney.date_list[0]}}</td>
-            <td style="width:32mm;">{{info.Kidney.date_list[1]}}</td>
-            <td style="width:31mm;">{{info.Kidney.date_list[2]}}</td>
+            <td style="width:32.7mm;background-color:#CCC5E2;">{{info.Kidney.date_list[0]==null?'':info.Kidney.date_list[0]}}</td>
+            <td style="width:32mm;">{{info.Kidney.date_list[1]==null?'':info.Kidney.date_list[1]}}</td>
+            <td style="width:31mm;">{{info.Kidney.date_list[2]==null?'':info.Kidney.date_list[2]}}</td>
           </tr>
           <tr v-if="info.Kidney.BUN!==null">
             <td>
@@ -20,7 +20,7 @@
             </td>
             <td>1.8-7.1 mmol/L</td>
             <td>
-               <template v-if="info.Kidney.BUN[0].length!=0">
+               <template v-if="info.Kidney.BUN[0]!=null">
               <span v-if="info.Kidney.BUN[0]<1.8">
               <img style="width:5mm;height:5mm;" src="../../../assets/new/低2.png" alt />
               </span><span v-else-if="info.Kidney.BUN[0]>7.1">
@@ -32,7 +32,7 @@
             </td>
             <td v-for="(item,index) in info.Kidney.BUN" :key="index">
                 <span
-                >{{item}}</span>
+                >{{item==null?'':item}}</span>
               </td>
           </tr>
           <tr v-if="info.Kidney.CRE!==null" style="background-color:#E6E2F3;">
@@ -41,7 +41,7 @@
             </td>
             <td>男 44-132,女 70-106 μmol/L</td>
             <td>
-             <template v-if="info.Kidney.CRE[0].length!=0">
+             <template v-if="info.Kidney.CRE[0]!==null">
               <span v-if="(info.Kidney.CRE[0]<44&&info.PersonInfo.gender=='男')||(info.Kidney.CRE[0]<70&&info.PersonInfo.gender=='女')">
               <img style="width:5mm;height:5mm;" src="../../../assets/new/低2.png" alt />
               </span><span v-else-if="(info.Kidney.CRE[0]>132&&info.PersonInfo.gender=='男')||(info.Kidney.CRE[0]>106&&info.PersonInfo.gender=='女')">
@@ -52,13 +52,13 @@
               </template>
             </td>
             <td style="background-color:#ccc5e2;">
-              <span>{{info.Kidney.CRE[0]}}</span>
+              <span>{{info.Kidney.CRE[0]==null?'':info.Kidney.CRE[0]}}</span>
             </td>
             <td>
-              <span>{{info.Kidney.CRE[1]}}</span>
+              <span>{{info.Kidney.CRE[1]==null?'':info.Kidney.CRE[1]}}</span>
             </td>
             <td>
-              <span>{{info.Kidney.CRE[2]}}</span>
+              <span>{{info.Kidney.CRE[2]==null?'':info.Kidney.CRE[2]}}</span>
             </td>
           </tr>
           <tr>
